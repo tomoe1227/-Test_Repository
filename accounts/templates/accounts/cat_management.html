@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<script>
+// 詳細を表示・非表示する関数
+function toggleDetails(catId) {
+    var element = document.getElementById("details-" + catId);
+    if (element.style.display === "none") {
+        element.style.display = "block";
+    } else {
+        element.style.display = "none";
+    }
+}
+</script>
+
+<div class="cat-profile">
+    <h1>猫のプロフィール</h1>
+    <a href="{% url 'accounts:cat_add' %}" class="btn btn-add-cat">新しい猫を追加</a>
+    {% for cat in cats %}
+    <div class="cat-item">
+        <div class="cat-photo">
+            {% if cat.photo %}
+            <img src="{{ cat.photo.url }}" alt="{{ cat.name }}">
+            {% else %}
+            <img src="{% static 'images/default-cat.jpg' %}" alt="デフォルト画像">
+            {% endif %}
+        </div>
+        <!-- 名前をクリック可能にし、onClickイベントを追加 -->
+        <div class="cat-name" onclick="toggleDetails('{{ cat.id }}')">
+            <a href="javascript:void(0);">{{ cat.name }}</a>
+        </div>
+        <!-- 詳細情報（初期状態では非表示） -->
+        <div id="details-{{ cat.id }}" style="display: none;">
+            <div class="cat-info">
+                <p>誕生日: {{ cat.birthday }}（年齢: {{ cat.get_age }}歳）</p>
+                <p>性別: {{ cat.gender }}</p>
+                <p>性格: {{ cat.personality }}</p>
+                <p>体重: {{ cat.weight }} kg</p>
+                <p>１日の餌の量: {{ cat.food_amount }} g</p>
+                <p>健康状態: {{ cat.health_status }}</p>
+                <a href="{% url 'accounts:cat_edit' cat.id %}" class="btn btn-edit-cat">猫の情報を編集</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <a href="{% url 'index' %}" class="btn btn-add-cat">戻る</a>
+</div>
+{% endblock %}

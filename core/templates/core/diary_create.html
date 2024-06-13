@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>MyDiaryApp</title>
+</head>
+<body>
+ 
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if form.errors %}
+        <div class="error">
+            <p>フォームにエラーがあります。修正してください。</p>
+        </div>
+    {% endif %}
+    <button type="submit">投稿</button>
+</form>
+</html>

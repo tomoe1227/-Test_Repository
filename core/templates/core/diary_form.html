@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="diary-profile">
+    <h2>日記を追加/編集</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if form.errors %}
+            <div class="error">
+                <p>フォームにエラーがあります。修正してください。</p>
+            </div>
+        {% endif %}
+        <button type="submit" class="btn btn-primary">保存</button>
+    </form>
+    <a href="{% url 'core:diary-list' %}" class="btn btn-secondary">戻る</a>
+</div>
+{% endblock %}

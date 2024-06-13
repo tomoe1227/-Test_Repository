@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>健康管理一覧</h1>
+<a href="{% url 'accounts:healthdiet_add' %}" class="btn btn-add-healthdiet">新しい健康管理を追加</a>
+<ul>
+    {% for healthdiet in healthdiets %}
+    <li>{{ healthdiet.cat.name }} - {{ healthdiet.health_status }} - {{ healthdiet.weight }}kg - {{ healthdiet.exercise_duration }}分
+        <a href="{% url 'accounts:healthdiet_edit' healthdiet.id %}">編集</a>
+        <a href="{% url 'accounts:healthdiet_delete' healthdiet.id %}">削除</a>
+    </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'index' %}">戻る</a>
+{% endblock %}

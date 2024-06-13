@@ -1,0 +1,30 @@
+<!-- cat_form.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>新しい猫を追加</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="photo" class="form-label">写真</label>
+        <input type="file" class="form-control" id="photo" name="photo">
+    </div>
+    <div class="mb-3">
+        <label for="name" class="form-label">名前</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+    <div class="mb-3">
+        <label for="birthday" class="form-label">誕生日</label>
+        <input type="date" class="form-control" id="birthday" name="birthday">
+    </div>
+    <div class="mb-3">
+        <label for="gender" class="form-label">性別</label>
+        <select class="form-select" id="gender" name="gender">
+            <option value="male">オス</option>
+            <option value="female">メス</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">保存</button>
+</form>
+<a href="{% url 'accounts:cat_management' %}"><button type="button" class="btn btn-secondary">戻る</button></a>
+{% endblock %}

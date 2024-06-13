@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="diary-container">
+    <h1>日記一覧</h1>
+    <div style="display: flex;">
+        <div style="flex: 1;">
+            <a href="{% url 'core:diary-add' %}" class="btn btn-add-diary">新しい日記を作成する</a>
+            <a href="{% url 'index' %}" class="btn-add-diary">戻る</a>
+            <ul id="diaries-list" class="diary-items">
+                {% for diary in diaries %}
+                <li class="diary-info" data-date="{{ diary.date|date:"Y-m-d" }}">
+                    <div>
+                        <h2>{{ diary.date|date:"Y年m月d日" }}</h2>
+                        <p>{{ diary.title }}</p>
+                        <div>{{ diary.text|linebreaks }}</div>
+                        {% if diary.photo %}
+                            <img src="{{ diary.photo.url }}" alt="{{ diary.title }}" style="max-width: 14.285%;">
+                        {% endif %}
+                        <a href="{% url 'core:diary-edit' diary.id %}" class="btn-edit-diary">編集</a>
+                        <a href="{% url 'core:diary-delete' diary.id %}" class="btn btn-danger">削除</a>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div style="flex: 1;">
+            <div id="calendar"></div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .fc-event {
+        background-color: #f96e29 !important; /* 濃いオレンジ色 */
+        border: none !important; /* ボーダーを消す */
+        color: #f6ca2b !important; /* 文字の色を変更 */
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'ja',
+        events: [
+            {% for diary in diaries %}
+            {
+                title: '{{ diary.title }}',
+                start: '{{ diary.date|date:"Y-m-d" }}'
+            },
+            {% endfor %}
+        ],
+        dateClick: function(info) {
+            var diaries = document.querySelectorAll('.diary-info');
+            var selectedDate = info.dateStr;
+            diaries.forEach(function(diary) {
+                var diaryDate = diary.getAttribute('data-date');
+                if (diaryDate === selectedDate) {
+                    diary.style.display = 'block';
+                } else {
+                    diary.style.display = 'none';
+                }
+            });
+        }
+    });
+    calendar.render();
+});
+</script>
+{% endblock %}

@@ -1,0 +1,147 @@
+/* 基本スタイル */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+}
+
+h1, h2, h3, p {
+    color: #1c0101;
+}
+
+a {
+    color: #030303;
+    text-decoration: none;
+}
+
+/* 全体のコンテナスタイル */
+.container {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 20px;
+}
+/* 
+.diary-container {
+    padding: 20px;
+    background-color: #b1eee4;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 20px;
+} */
+
+/* 猫のプロフィールスタイル */
+.cat-profile {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.cat-item {
+    border: 2px solid #eee;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+}
+
+.cat-photo img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+    border: 3px solid #007bff;
+}
+
+.cat-name a {
+    font-size: 18px; /* フォントサイズを大きくする */
+    font-weight: bold; /* フォントを太字にする */
+}
+
+.cat-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; /* 間隔を調整 */
+    list-style-type: square; /* 箇条書きのスタイルを追加 */
+    padding-left: 20px; /* テキストの位置調整のためのパディング */
+    font-weight: bold;
+}
+
+.cat-info h3, .cat-info p {
+    margin: 0;
+    padding: 0;
+    color: #270101;
+}
+
+.diary-profile{
+    background-color: #ffffff; /* 背景色の変更 */
+    padding: 30px; /* パディングの追加 */
+    border-radius: 10px; /* 角の丸みを加える */
+    box-shadow: 0 10px 10px rgba(0,0,0,0.1); /* 影の追加 */
+}
+
+.diary-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; /* 間隔を調整 */
+    list-style-type: square; /* 箇条書きのスタイルを追加 */
+    padding-left: 20px; /* テキストの位置調整のためのパディング */
+    font-weight: bold;
+}
+
+.diary-item img {
+    width: 14.28%;  /* 1/7のサイズに縮小 */
+    height: auto;
+}
+
+/* ボタンスタイル */
+.btn-primary, .btn-secondary, .btn-add-cat, .btn-edit-cat, .btn-add-diary {
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-add-cat {
+    background-color: #28a745;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.btn-edit-cat {
+    background-color: #ffc107;
+    color: white;
+}
+
+.btn-add-diary, .btn-edit-diary {
+    background-color: #059707; /* ボタンの背景色 */
+    color: white; /* テキスト色 */
+    margin-bottom: 10px;
+}
+
+
+/* ダイアリーとスケジュールアイテムのスタイル */
+.diary-item, .schedule-item {
+    margin-bottom: 10px;
+    padding: 15px;
+    border: 3px solid #7cbb6b;
+    border-radius: 10px;
+    background-color: white;
+}
+
+/* ボタンテキストのフォントサイズを大きくする */
+.btn-add-cat, .btn-edit-cat {
+    font-size: 19px; /* フォントサイズを増やす */
+    padding: 12px 24px; /* ビジュアル向上のためパディングを調整 */
+}
+
+.fc-sat { background-color: #c1e0ff; }
+.fc-sun, .fc-holiday { background-color: #ffc1c1; }

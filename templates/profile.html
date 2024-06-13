@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プロフィール</title>
+    <!-- 必要なCSSやスタイルシートを読み込む -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <h1>プロフィール</h1>
+        <p>ユーザー名: {{ user.username }}</p>
+        <p>メールアドレス: {{ user.email }}</p>
+        <!-- 他のプロフィール情報を追加 -->
+    </main>
+
+    <header>
+        <!-- ナビゲーションメニューやロゴなどのヘッダーのコンテンツ -->
+        <nav>
+            <ul>
+                <li><a href="{% url 'index' %}">ホーム</a></li>
+                <li><a href="{% url 'accounts:cat_management' %}">猫の管理画面</a></li>
+                <li><a href="{% url 'core:task-list' %}">タスク管理</a></li>
+                <li><a href="{% url 'core:schedule_list' %}">スケジュール管理</a></li>
+                <li><a href="{% url 'core:diary-list' %}">日記</a></li>
+                <li><a href="{% url 'accounts:logout' %}">ログアウト</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <footer>
+        <!-- フッターのコンテンツ -->
+    </footer>
+
+    <!-- 必要なJavaScriptファイルを読み込む -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>タスクを追加</h2><a href="{% url 'core:task-list' %}"><button type="submit">戻る</button></a>
+<form method="post" id="task-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">保存</button>
+</form>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<p>本当に削除しますか？</p><a href="{% url 'core:task-list' %}"><button type="submit">戻る</button></a>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">削除</button>
+</form>
+{% endblock %}

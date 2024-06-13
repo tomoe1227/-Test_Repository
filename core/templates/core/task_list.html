@@ -1,0 +1,23 @@
+{% load static %}
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>タスクリスト</title>
+</head>
+<body>
+    <h1>タスクリスト</h1>
+    <a href="{% url 'core:task-add' %}"><button type="submit">タスクを追加</button></a>
+    <a href="{% url 'index' %}"><button type="submit">戻る</button></a>
+    <ul id="tasks-list">
+        {% for task in tasks %}
+            <li>
+                {{ task.title }} - {{ task.description }}: {{ task.completed|yesno:"実施済,未実施" }} - {{ task.duration|duration_to_hours_minutes }} - <a href="{% url 'core:task-edit' task.id %}">編集</a>,<a href="{% url 'core:task-delete' task.id %}">削除</a>
+            </li>     
+        {% endfor %}
+    </ul>
+    <p>タスク合計時間: {{ total_duration }}</p>
+    <script src="{% static 'js/task.js' %}"></script>
+</body>
+</html>

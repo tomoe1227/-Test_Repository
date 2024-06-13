@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    {% if user.is_authenticated %}
+        <!-- ログイン後のユーザーの場合 -->
+        <h1>Welcome, {{ user.username }}!</h1>
+        <a href="{% url 'profile' %}">プロフィール画面へ</a><br>
+        <a href="{% url 'accounts:cat_management' %}">猫の管理画面へ</a><br>
+        <a href="{% url 'core:task-list' %}">タスク管理画面へ</a><br>
+        <a href="{% url 'core:schedule_list' %}">スケジュール管理画面へ</a><br>
+        <a href="{% url 'core:diary-list' %}">日記画面へ</a><br>
+        <a href="{% url 'accounts:logout' %}">ログアウト</a>
+    {% else %}
+        <!-- 未認証のユーザーの場合 -->
+        <h1>Welcome to ネコっとライフメイト</h1>
+        <!-- ログインフォーム -->
+        <form method="post">
+            {% csrf_token %}
+            <!-- ユーザー名入力欄 -->
+            <label for="username">ユーザー名:</label><br>
+            <input type="text" id="username" name="username"><br>
+            <!-- パスワード入力欄 -->
+            <label for="password">パスワード:</label><br>
+            <input type="password" id="password" name="password"><br>
+            <button type="submit">ログイン</button>
+        </form>
+        <!-- 新規ユーザー登録のリンク -->
+        <a href="{% url 'accounts:signup' %}">新規ユーザー登録</a>
+    {% endif %}
+</body>
+</html>

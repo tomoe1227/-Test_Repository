@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <h2>{{ diary.title }}</h2>
+  <p>{{ diary.date }}</p>
+  <div>{{ diary.text|linebreaks }}</div>
+  <a href="{% url 'core:diary-list' %}">日記一覧に戻る</a>
+{% endblock %}

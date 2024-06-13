@@ -1,0 +1,94 @@
+/* 基本スタイル */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+}
+
+h1, h2, h3, p {
+    color: #333;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+/* 全体のコンテナスタイル */
+.container {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 20px;
+}
+
+/* 猫のプロフィールスタイル */
+.cat-profile {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.cat-item {
+    border: 2px solid #eee;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+}
+
+.cat-photo img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+    border: 3px solid #007bff;
+}
+
+.cat-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cat-info h3, .cat-info p {
+    margin: 0;
+    padding: 0;
+    color: #007bff;
+}
+
+/* ボタンスタイル */
+.btn-primary, .btn-secondary, .btn-add-cat, .btn-edit-cat {
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-add-cat {
+    background-color: #28a745;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.btn-edit-cat {
+    background-color: #ffc107;
+    color: white;
+}
+
+/* ダイアリーとスケジュールアイテムのスタイル */
+.diary-item, .schedule-item {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
