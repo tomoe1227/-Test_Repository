@@ -1,22 +1,15 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, CreateView, DetailView, ListView, UpdateView, DeleteView
-from django.views.generic.edit import CreateView, UpdateView
-from django.views import View
-from django.urls import reverse, reverse_lazy
-from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.shortcuts import render
 from .forms import TaskForm, ScheduleForm, DiaryForm
 from .models import Task, Diary, Schedule
 from django.db.models import F, Sum
-from django.db import models  # ここを追加
-from typing import Dict
-import json
-from django.core.serializers import serialize
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.utils.timezone import timedelta, localtime
-from django.utils.dateparse import parse_datetime
 from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_http_methods
+import json
 
 class IndexView(TemplateView):
     template_name = 'index.html'
@@ -76,7 +69,7 @@ class ScheduleListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         schedules = Schedule.objects.all()
-        context['schedule_data'] = serialize('json', schedules, fields=('title', 'start_datetime', 'end_datetime'))
+        context['schedule_data'] = schedules
         return context
 
 class ScheduleCreateView(LoginRequiredMixin, CreateView):
@@ -103,13 +96,16 @@ class ScheduleDetailView(LoginRequiredMixin, DetailView):
     model = Schedule
     template_name = 'core/schedule_detail.html'
 
+@csrf_exempt
 def schedule_list(request):
     schedules = Schedule.objects.all()
     data = [
         {
+            'id': schedule.id,
             'title': schedule.title,
             'start': schedule.start_datetime.isoformat(),
             'end': schedule.end_datetime.isoformat(),
+            'backgroundColor': schedule.category_color,  # ここを追加
             'extendedProps': {
                 'description': schedule.description,
                 'location': schedule.location
@@ -121,7 +117,7 @@ def schedule_list(request):
 @csrf_exempt
 def create_schedule(request):
     if request.method == 'POST':
-        form = ScheduleForm(request.POST)
+        form = ScheduleForm(json.loads(request.body))
         if form.is_valid():
             schedule = form.save(commit=False)
             schedule.owner = request.user
@@ -131,26 +127,31 @@ def create_schedule(request):
             return JsonResponse({'status': 'error', 'errors': form.errors.as_json()}, status=400)
     return JsonResponse({'status': 'error', 'method': 'GET not allowed'}, status=405)
 
-def add_schedule(request):
-    if request.method == 'POST':
-        form = ScheduleForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('core:schedule_list')
-    else:
-        form = ScheduleForm()
-    return render(request, 'core/schedule_form.html', {'form': form})
+@csrf_exempt
+def update_schedule(request, id):
+    try:
+        schedule = Schedule.objects.get(id=id, owner=request.user)
+    except Schedule.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': 'Schedule not found'}, status=404)
 
+    if request.method == 'PUT':
+        data = json.loads(request.body)
+        form = ScheduleForm(data, instance=schedule)
+        if form.is_valid():
+            schedule = form.save()
+            return JsonResponse({'status': 'success', 'schedule_id': schedule.id})
+        else:
+            return JsonResponse({'status': 'error', 'errors': form.errors.as_json()}, status=400)
+    return JsonResponse({'status': 'error', 'method': 'GET not allowed'}, status=405)
+
+@csrf_exempt
 @require_http_methods(["DELETE"])
 def delete_schedule(request, id):
     try:
-        print(f"Received delete request for schedule id: {id}")  # デバッグ用の出力
         schedule = Schedule.objects.get(id=id, owner=request.user)
         schedule.delete()
-        print(f"Schedule id {id} deleted successfully.")  # デバッグ用の出力
         return JsonResponse({'status': 'success'})
     except Schedule.DoesNotExist:
-        print(f"Schedule id {id} not found.")  # デバッグ用の出力
         return JsonResponse({'status': 'error', 'message': 'Schedule not found'}, status=404)
 
 def events(request):
@@ -160,6 +161,7 @@ def events(request):
             'title': event.title,
             'start': event.start_datetime.isoformat(),
             'end': event.end_datetime.isoformat(),
+            'backgroundColor': event.category_color,  # ここを追加
         } for event in events
     ]
     return JsonResponse(events_data, safe=False)

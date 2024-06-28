@@ -1,6 +1,12 @@
-from django.urls import path, include
+from django.urls import path
 from . import views
-from .views import IndexView, TaskListView, TaskCreateView, TaskUpdateView, TaskDeleteView, schedule_list, ScheduleListView, ScheduleCreateView, ScheduleUpdateView, ScheduleDeleteView, ScheduleDetailView, DiaryListView, DiaryCreateView, DiaryUpdateView, DiaryDetailView, DiaryDeleteView, create_schedule, add_schedule, events, DiaryCreateCompleteView, diary_list_api
+from .views import (
+    IndexView, TaskListView, TaskCreateView, TaskUpdateView, TaskDeleteView, 
+    schedule_list, ScheduleListView, ScheduleCreateView, ScheduleUpdateView, 
+    ScheduleDeleteView, ScheduleDetailView, DiaryListView, DiaryCreateView, 
+    DiaryUpdateView, DiaryDetailView, DiaryDeleteView, create_schedule, 
+    update_schedule, events, DiaryCreateCompleteView, diary_list_api
+)
 
 app_name = 'core'
 
@@ -14,11 +20,11 @@ urlpatterns = [
     path('schedules/', ScheduleListView.as_view(), name='schedule_list'),
     path('schedules/add/', ScheduleCreateView.as_view(), name='schedule_add'),
     path('schedules/<int:pk>/edit/', ScheduleUpdateView.as_view(), name='schedule-edit'),
-    path('schedules/add/', add_schedule, name='add_schedule'),
     path('schedules/<int:pk>/delete/', ScheduleDeleteView.as_view(), name='schedule-delete'),
     path('schedules/<int:pk>/detail/', ScheduleDetailView.as_view(), name='schedule_detail'),
-    path('schedule/create/', create_schedule, name='create_schedule'),
     path('api/schedules/', schedule_list, name='api_schedules'),
+    path('api/create_schedule/', create_schedule, name='create_schedule'),
+    path('api/update_schedule/<int:id>/', update_schedule, name='update_schedule'),
     path('api/delete_schedule/<int:id>/', views.delete_schedule, name='delete_schedule'),
     path('events/', events, name='events'),
     path('diary-list/', DiaryListView.as_view(), name='diary-list'),

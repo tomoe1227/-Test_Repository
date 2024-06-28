@@ -20,6 +20,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="eventForm">
+                        <input type="hidden" id="event-id" name="event-id">
                         <div class="mb-3">
                             <label for="title" class="form-label">タイトル</label>
                             <input type="text" class="form-control" id="title" name="title" required>
@@ -57,7 +58,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
                     <button type="button" class="btn btn-primary" onclick="saveEvent()">保存</button>
-                    <button type="button" class="btn btn-danger" onclick="deleteEvent(selectedEventId)">削除</button>
+                    <button type="button" class="btn btn-danger" id="delete-button" onclick="deleteEvent()" style="display:none;">削除</button>
                 </div>
             </div>
         </div>

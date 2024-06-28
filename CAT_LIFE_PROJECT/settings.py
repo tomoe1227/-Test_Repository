@@ -11,10 +11,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-r8&v8i9ifk=%)!db6r+4-3znaxkv$x7k-$-$5^+ru)srdgk7s2"
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+from django.core.management.utils import get_random_secret_key
+SECRET_KEY = get_random_secret_key()  
 
-ALLOWED_HOSTS = []
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False
+
+ALLOWED_HOSTS = ['localhost', '.pythonanywhere.com', 'tsujitomoe.pythonanywhere.com']
 
 
 # Application definition
@@ -134,3 +137,11 @@ EMAIL_HOST_PASSWORD = 'vlso txeb zpau cejq'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+try:
+    from .local_settings import *
+except:
+    pass
